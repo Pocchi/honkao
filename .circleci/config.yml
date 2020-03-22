@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/app
     docker:
-      - image: circleci/node:8.10.0
+      - image: circleci/node:10.15.3
     steps:
       - checkout
       - run: echo 1 # ここにあなたのプロジェクトにあわせたテストを記述
