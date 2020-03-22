@@ -18,7 +18,7 @@ jobs:
       - run: yarn build
       - run: echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
       - run: gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
-      - run: gcloud app deploy --quiet --project honkao
+      - run: gcloud app deploy --quiet --project honkao-5a816
 
 workflows:
   version: 2
