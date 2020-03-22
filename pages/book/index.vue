@@ -7,7 +7,12 @@
             el-option(label="ISBN" value="ISBN")
           el-button(slot="append" icon="el-icon-search" @click="search")
         el-button.camera-button(type="primary" @click="modalShow = !modalShow") カメラを起動する
+      .book-searched
+        p 検索結果:
         Book(:props="book")
+        .book-searched-buttons
+          el-button() 読みたい本に登録
+          el-button() 買った本に登録
     .modal(v-if="modalShow")
       .modal-camera
         .camera-area(ref="camera")
@@ -184,6 +189,19 @@ export default Vue.extend({
     left: 0;
     width: 300px;
     height: 300px;
+  }
+}
+.book-searched {
+  width: 400px;
+  margin: 0 auto;
+  p {
+    text-align: center;
+    margin-bottom: 5px;
+  }
+  .book-searched-buttons {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
   }
 }
 </style>
