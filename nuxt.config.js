@@ -3,6 +3,15 @@ module.exports = {
   /*
    ** Headers of the page
    */
+  env: {
+    apiKey: process.env.apiKey,
+    authDomain: process.env.authDomain,
+    databaseURL: process.env.databaseURL,
+    projectId: process.env.projectId,
+    storageBucket: process.env.storageBucket,
+    messagingSenderId: process.env.messagingSenderId,
+    host: '',
+  },
   head: {
     title: process.env.npm_package_name || '',
     meta: [
