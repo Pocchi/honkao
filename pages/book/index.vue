@@ -9,10 +9,16 @@
         el-button.camera-button(type="primary" @click="modalShow = !modalShow") カメラを起動する
       .book-searched
         p 検索結果:
-        Book(:props="book")
-        .book-searched-buttons
-          el-button() 読みたい本に登録
-          el-button() 買った本に登録
+        .book-wrap
+          Book(:book="book")
+        .book-searched-input
+          el-form
+            el-form-item(label="価格入力")
+              el-input(v-model="price")
+                template(slot="append") 円
+            .book-searched-buttons
+              el-button(@click="onClickWant") 買いたい本に登録
+              el-button(@click="onClickBought") 買った本に登録
     .modal(v-if="modalShow")
       .modal-camera
         .camera-area(ref="camera")
@@ -37,7 +43,8 @@ export default Vue.extend({
       modalShow: false,
       select: 'ISBN',
       input: '9784873116211',
-      book: bookData
+      book: bookData,
+      price: 0
     }
     return data
   },
@@ -56,6 +63,20 @@ export default Vue.extend({
     if (this.Quagga) this.Quagga.stop()
   },
   methods: {
+    onClickBought() {
+      this.$store.dispatch('setBoughtBook', {
+        book: this.book,
+        price: this.price,
+        isbn: this.input
+      })
+    },
+    onClickWant() {
+      this.$store.dispatch('setBoughtBook', {
+        book: this.book,
+        price: this.price,
+        isbn: this.input
+      })
+    },
     async search() {
       try {
         const res = await this.$axios.$get(
@@ -203,5 +224,13 @@ export default Vue.extend({
     display: flex;
     justify-content: center;
   }
+  .book-wrap {
+    display: flex;
+    justify-content: center;
+  }
+}
+.book-searched-input {
+  margin-top: 10px;
+  padding: 0 50px;
 }
 </style>
