@@ -1,8 +1,9 @@
 <template lang="pug">
   .user-setting
     .main-contents
+      h2.title 予算を入力する
       el-form
-        el-form-item(label="予算入力" :rules="rules")
+        el-form-item(label="予算")
           el-input(v-model="price")
             template(slot="append") 円
       el-button.button(type="primary" @click="onClickPriceButton") 登録
@@ -13,34 +14,21 @@ import Vue from 'vue'
 export default Vue.extend({
   data() {
     const data = {
-      price: 0,
-      rules: {
-        price: [
-          {
-            required: true,
-            message: '入力してください。'
-          },
-          {
-            max: 7,
-            message: '7桁以内で入力してください。'
-          },
-          {
-            min: 3,
-            message: '3桁以上で入力してください。'
-          },
-          {
-            type: 'number',
-            message: '数値で入力してください。'
-          }
-        ]
-      }
+      price: 0
     }
     return data
   },
   methods: {
-    onClickPriceButton(): void {
-      if (Number.isNaN(this.price)) {
-        console.log(this.price)
+    async onClickPriceButton() {
+      try {
+        await this.$store.dispatch('setBudget', this.price)
+        this.$notify({
+          type: 'success',
+          title: '登録成功',
+          message: ''
+        })
+      } catch (e) {
+        console.error(e)
       }
     }
   }

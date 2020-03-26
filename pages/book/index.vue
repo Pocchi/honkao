@@ -1,13 +1,14 @@
 <template lang="pug">
   .book-camera
     .main-contents
+      h2.title 本を登録する
       .book-camera-contents
         el-input.input-with-select(v-model="input")
           el-select(v-model="select" slot="prepend" placeholder="select")
             el-option(label="ISBN" value="ISBN")
           el-button(slot="append" icon="el-icon-search" @click="search")
         el-button.camera-button(type="primary" @click="modalShow = !modalShow") カメラを起動する
-      .book-searched
+      .book-searched(v-if="book && book.volumeInfo")
         p 検索結果:
         .book-wrap
           Book(:book="book")
@@ -28,6 +29,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import moment from 'moment'
 import Book from '~/components/BookThumb.vue'
 import bookData from '~/data/sample-book.json'
 type Config = typeof bookData
@@ -43,7 +45,7 @@ export default Vue.extend({
       modalShow: false,
       select: 'ISBN',
       input: '9784873116211',
-      book: bookData,
+      book: {},
       price: 0
     }
     return data
@@ -63,19 +65,53 @@ export default Vue.extend({
     if (this.Quagga) this.Quagga.stop()
   },
   methods: {
-    onClickBought() {
-      this.$store.dispatch('setBoughtBook', {
-        book: this.book,
-        price: this.price,
-        isbn: this.input
-      })
+    async onClickBought() {
+      try {
+        await this.$store.dispatch('setBoughtBook', {
+          book: this.book,
+          price: this.price,
+          isbn: this.input
+        })
+        this.$notify({
+          type: 'success',
+          title: '登録成功',
+          message: ''
+        })
+        this.book = {}
+        this.price = 0
+        this.$router.push(
+          `/user/${this.$store.state.uid}/${moment().format('YYYYMM')}/list`
+        )
+      } catch (e) {
+        this.$notify.error({
+          title: '登録失敗',
+          message: ''
+        })
+      }
     },
-    onClickWant() {
-      this.$store.dispatch('setBoughtBook', {
-        book: this.book,
-        price: this.price,
-        isbn: this.input
-      })
+    async onClickWant() {
+      try {
+        await this.$store.dispatch('setWantBook', {
+          book: this.book,
+          price: this.price,
+          isbn: this.input
+        })
+        this.$notify({
+          type: 'success',
+          title: '登録成功',
+          message: ''
+        })
+        this.book = {}
+        this.price = 0
+        this.$router.push(
+          `/user/${this.$store.state.uid}/${moment().format('YYYYMM')}/list`
+        )
+      } catch (e) {
+        this.$notify.error({
+          title: '登録失敗',
+          message: ''
+        })
+      }
     },
     async search() {
       try {

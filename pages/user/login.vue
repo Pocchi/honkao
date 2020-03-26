@@ -1,6 +1,7 @@
 <template lang="pug">
   .user-login
     .main-contents
+      h2.title ログイン
       el-form
         el-form-item(label="メールアドレス")
           el-input(v-model="mail")

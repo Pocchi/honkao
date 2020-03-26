@@ -66,7 +66,9 @@ module.exports = {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {},
-  middleware: ['auth-cookie'],
+  router: {
+    middleware: ['auth-cookie']
+  },
   /*
    ** Build configuration
    */

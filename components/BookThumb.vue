@@ -1,5 +1,5 @@
 <template lang="pug">
-  .book(v-if="book")
+  .book(v-if="book && book.volumeInfo")
     .book-image
       img(:src="book.volumeInfo.imageLinks.smallThumbnail")
     .book-texts
