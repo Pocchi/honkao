@@ -89,6 +89,9 @@ export default Vue.extend({
   .price {
     text-align: center;
   }
+  .meter-wrap {
+    height: 120px;
+  }
   .meter {
     margin-bottom: 15px;
   }

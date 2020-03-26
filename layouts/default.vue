@@ -7,8 +7,27 @@
         ul
           li
             nuxt-link(to="/book/") 本の登録
+          li
+            nuxt-link(to="/user/setting") 予算登録
+          li(v-if="uid")
+            nuxt-link(:to="`/user/${uid}/${month}/list`") 買った本
     nuxt
 </template>
+
+<script lang="ts">
+import Vue from 'vue'
+
+export default Vue.extend({
+  computed: {
+    uid(): string {
+      return this.$store.state.uid
+    },
+    month(): string {
+      return this.$store.state.month
+    }
+  }
+})
+</script>
 
 <style lang="scss" scoped>
 header {
@@ -37,6 +56,11 @@ nav {
   ul {
     display: flex;
     list-style: none;
+  }
+  li {
+    &:not(:first-child) {
+      margin-left: 10px;
+    }
   }
 }
 </style>
