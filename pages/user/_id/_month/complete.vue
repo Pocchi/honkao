@@ -78,7 +78,11 @@ export default Vue.extend({
   },
   async mounted() {
     try {
-      if (this.$store.state.monthData && this.$store.state.uid === this.uid) {
+      if (
+        this.$store.state.monthData &&
+        this.$store.state.monthData.created_at &&
+        this.$store.state.uid === this.uid
+      ) {
         return
       }
       await this.$store.dispatch('getUserMonthData', {
