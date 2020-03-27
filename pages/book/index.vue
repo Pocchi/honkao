@@ -64,6 +64,35 @@ export default Vue.extend({
   destroyed() {
     if (this.Quagga) this.Quagga.stop()
   },
+  computed: {
+    budget(): number {
+      const data: number = this.$store.state.monthData.budget || 0
+      return data
+    },
+    books(): any {
+      return this.$store.state.boughtBooks || []
+    },
+    bought(): number {
+      let sum = 0
+      this.books.forEach((book: any) => {
+        sum += book.price
+      })
+      return sum
+    }
+  },
+  async mounted() {
+    try {
+      if (this.$store.state.monthData) {
+        return
+      }
+      await this.$store.dispatch('getUserMonthData', {
+        uid: this.$store.state.uid,
+        month: this.$store.state.month
+      })
+    } catch (e) {
+      console.error(e)
+    }
+  },
   methods: {
     async onClickBought() {
       try {
@@ -77,11 +106,22 @@ export default Vue.extend({
           title: '登録成功',
           message: ''
         })
+        const newBought: number = this.bought + Number(this.price)
         this.book = {}
         this.price = 0
-        this.$router.push(
-          `/user/${this.$store.state.uid}/${moment().format('YYYYMM')}/list`
-        )
+        if (newBought >= this.budget) {
+          // 100%超えた場合
+          this.$router.push(
+            `/user/${this.$store.state.uid}/${moment().format(
+              'YYYYMM'
+            )}/complete`
+          )
+        } else {
+          // 100%超えない場合
+          this.$router.push(
+            `/user/${this.$store.state.uid}/${moment().format('YYYYMM')}/list`
+          )
+        }
       } catch (e) {
         this.$notify.error({
           title: '登録失敗',
