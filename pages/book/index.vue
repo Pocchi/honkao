@@ -44,7 +44,7 @@ export default Vue.extend({
       Quagga,
       modalShow: false,
       select: 'ISBN',
-      input: '9784873116211',
+      input: '',
       book: {},
       price: 0
     }
