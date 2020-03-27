@@ -19,6 +19,7 @@ export default Vue.extend({
     return data
   },
   async mounted() {
+    if (!this.$store.state.uid) this.$router.push('/user/login')
     try {
       if (this.$store.state.monthData) {
         this.price = this.$store.state.monthData.budget

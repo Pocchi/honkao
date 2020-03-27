@@ -81,6 +81,7 @@ export default Vue.extend({
     if (this.Quagga) this.Quagga.stop()
   },
   async mounted() {
+    if (!this.$store.state.uid) this.$router.push('/user/login')
     try {
       if (this.$store.state.monthData) {
         return

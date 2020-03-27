@@ -21,6 +21,13 @@ export default Vue.extend({
     }
     return data
   },
+  mounted() {
+    if (this.$store.state.uid) {
+      this.$router.push(
+        `/user/${this.$store.state.uid}/${this.$store.state.month}/list`
+      )
+    }
+  },
   methods: {
     async login() {
       try {
