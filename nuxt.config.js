@@ -13,7 +13,7 @@ module.exports = {
     host: 'https://honkao-5a816.appspot.com'
   },
   head: {
-    title: process.env.npm_package_name || '',
+    title: 'ほんかお',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
