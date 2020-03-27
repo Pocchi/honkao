@@ -10,6 +10,7 @@ module.exports = {
     projectId: process.env.projectId,
     storageBucket: process.env.storageBucket,
     messagingSenderId: process.env.messagingSenderId,
+    appId: process.env.appId,
     host: 'https://honkao-5a816.appspot.com'
   },
   head: {
@@ -58,6 +59,12 @@ module.exports = {
     '@nuxtjs/pwa',
     '@nuxtjs/style-resources'
   ],
+  manifest: {
+    name: 'ほんかお',
+    short_name: 'ほんかお',
+    lang: 'ja',
+    gcm_sender_id: '103953800507'
+  },
   styleResources: {
     scss: ['@/assets/styles/_variable.scss']
   },

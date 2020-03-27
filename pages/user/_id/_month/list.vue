@@ -19,6 +19,8 @@
 import Vue from 'vue'
 import Book from '~/components/BookThumb.vue'
 import bookData from '~/data/sample-book.json'
+import firebase from '~/plugins/firebase'
+const messaging = firebase.messaging()
 type Config = typeof bookData
 
 export default Vue.extend({
@@ -61,6 +63,23 @@ export default Vue.extend({
         return 0
       }
     }
+  },
+  created() {
+    messaging
+      .requestPermission()
+      .then(() => {
+        console.log('Have permission')
+        return messaging.getToken()
+      })
+      .then((currentToken) => {
+        if (currentToken) {
+          // プッシュ通知を受信し，表示できる状態
+        }
+      })
+      .catch((err: any) => {
+        console.log('Error Occurred.')
+        console.error(err)
+      })
   },
   async mounted() {
     if (!this.$store.state.uid) this.$router.push('/user/login')
