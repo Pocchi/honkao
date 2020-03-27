@@ -50,20 +50,6 @@ export default Vue.extend({
     }
     return data
   },
-  watch: {
-    modalShow() {
-      this.$nextTick(() => {
-        if (this.modalShow) {
-          this.initQuagga()
-        } else if (this.Quagga) {
-          this.Quagga.stop()
-        }
-      })
-    }
-  },
-  destroyed() {
-    if (this.Quagga) this.Quagga.stop()
-  },
   computed: {
     budget(): number {
       const data: number = this.$store.state.monthData.budget || 0
@@ -79,6 +65,20 @@ export default Vue.extend({
       })
       return sum
     }
+  },
+  watch: {
+    modalShow() {
+      this.$nextTick(() => {
+        if (this.modalShow) {
+          this.initQuagga()
+        } else if (this.Quagga) {
+          this.Quagga.stop()
+        }
+      })
+    }
+  },
+  destroyed() {
+    if (this.Quagga) this.Quagga.stop()
   },
   async mounted() {
     try {

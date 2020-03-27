@@ -18,20 +18,6 @@ export default Vue.extend({
     }
     return data
   },
-  methods: {
-    async onClickPriceButton() {
-      try {
-        await this.$store.dispatch('setBudget', this.price)
-        this.$notify({
-          type: 'success',
-          title: '登録成功',
-          message: ''
-        })
-      } catch (e) {
-        console.error(e)
-      }
-    }
-  },
   async mounted() {
     try {
       if (this.$store.state.monthData) {
@@ -45,6 +31,20 @@ export default Vue.extend({
       this.price = this.$store.state.monthData.budget
     } catch (e) {
       console.error(e)
+    }
+  },
+  methods: {
+    async onClickPriceButton() {
+      try {
+        await this.$store.dispatch('setBudget', this.price)
+        this.$notify({
+          type: 'success',
+          title: '登録成功',
+          message: ''
+        })
+      } catch (e) {
+        console.error(e)
+      }
     }
   }
 })

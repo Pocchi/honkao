@@ -33,6 +33,14 @@ export default Vue.extend({
   components: {
     Book
   },
+  asyncData({ params }) {
+    const month = params.month
+    const uid = params.id
+    return {
+      month,
+      uid
+    }
+  },
   data() {
     return {
       month: '',
@@ -79,14 +87,6 @@ export default Vue.extend({
       })
     } catch (e) {
       console.error(e)
-    }
-  },
-  asyncData({ params }) {
-    const month = params.month
-    const uid = params.id
-    return {
-      month,
-      uid
     }
   },
   head() {
