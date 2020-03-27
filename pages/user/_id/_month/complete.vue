@@ -119,7 +119,7 @@ export default Vue.extend({
         {
           hid: 'twitter:image',
           property: 'twitter:image',
-          content: `${process.env.host}/assets/images/post-image.png`
+          content: `${process.env.host}/static/post-image.png`
         },
         { hid: 'twitter:description', name: 'twitter:description', content: '' }
       ],
