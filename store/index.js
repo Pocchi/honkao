@@ -69,6 +69,20 @@ export const actions = {
         created_at: firebase.firestore.Timestamp.fromDate(new Date())
       })
   },
+  async logout({ commit }) {
+    await firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        console.log('ログアウトしました')
+        const cookies = new Cookies()
+        cookies.remove('user')
+        cookies.remove('uid')
+      })
+      .catch((error) => {
+        console.log(`ログアウト時にエラーが発生しました (${error})`)
+      })
+  },
   async login({ commit, dispatch }, payload) {
     let uid
     let user

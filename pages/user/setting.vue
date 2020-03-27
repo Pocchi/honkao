@@ -31,6 +31,21 @@ export default Vue.extend({
         console.error(e)
       }
     }
+  },
+  async mounted() {
+    try {
+      if (this.$store.state.monthData) {
+        this.price = this.$store.state.monthData.budget
+        return
+      }
+      await this.$store.dispatch('getUserMonthData', {
+        uid: this.$store.state.uid,
+        month: this.$store.state.month
+      })
+      this.price = this.$store.state.monthData.budget
+    } catch (e) {
+      console.error(e)
+    }
   }
 })
 </script>

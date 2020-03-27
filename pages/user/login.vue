@@ -33,7 +33,9 @@ export default Vue.extend({
           title: 'ログイン成功',
           message: ''
         })
-        this.$router.push(`/user/${this.$store.state.uid}/list`)
+        this.$router.push(
+          `/user/${this.$store.state.uid}/${this.$store.state.month}/list`
+        )
       } catch (e) {
         console.error(e)
         this.$notify.error({
