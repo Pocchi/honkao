@@ -10,10 +10,10 @@ module.exports = {
     projectId: process.env.projectId,
     storageBucket: process.env.storageBucket,
     messagingSenderId: process.env.messagingSenderId,
-    host: '',
+    host: 'https://honkao-5a816.appspot.com'
   },
   head: {
-    title: process.env.npm_package_name || '',
+    title: 'ほんかお',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -40,14 +40,14 @@ module.exports = {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['@/plugins/element-ui'],
+  plugins: ['@/plugins/element-ui', '@/plugins/firebase'],
   /*
    ** Nuxt.js dev-modules
    */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
     '@nuxtjs/eslint-module',
-    '@nuxt/typescript-build',
+    '@nuxt/typescript-build'
   ],
   /*
    ** Nuxt.js modules
@@ -59,15 +59,16 @@ module.exports = {
     '@nuxtjs/style-resources'
   ],
   styleResources: {
-    scss: [
-    '@/assets/styles/_variable.scss'
-    ],
+    scss: ['@/assets/styles/_variable.scss']
   },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
   axios: {},
+  router: {
+    middleware: ['auth-cookie']
+  },
   /*
    ** Build configuration
    */

@@ -1,18 +1,25 @@
 <template lang="pug">
   .book-camera
     .main-contents
+      h2.title 本を登録する
       .book-camera-contents
         el-input.input-with-select(v-model="input")
           el-select(v-model="select" slot="prepend" placeholder="select")
             el-option(label="ISBN" value="ISBN")
           el-button(slot="append" icon="el-icon-search" @click="search")
         el-button.camera-button(type="primary" @click="modalShow = !modalShow") カメラを起動する
-      .book-searched
+      .book-searched(v-if="book && book.volumeInfo")
         p 検索結果:
-        Book(:props="book")
-        .book-searched-buttons
-          el-button() 読みたい本に登録
-          el-button() 買った本に登録
+        .book-wrap
+          Book(:book="book")
+        .book-searched-input
+          el-form
+            el-form-item(label="価格入力")
+              el-input(v-model="price")
+                template(slot="append") 円
+            .book-searched-buttons
+              el-button(@click="onClickWant") 買いたい本に登録
+              el-button(@click="onClickBought") 買った本に登録
     .modal(v-if="modalShow")
       .modal-camera
         .camera-area(ref="camera")
@@ -22,6 +29,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import moment from 'moment'
 import Book from '~/components/BookThumb.vue'
 import bookData from '~/data/sample-book.json'
 type Config = typeof bookData
@@ -37,9 +45,26 @@ export default Vue.extend({
       modalShow: false,
       select: 'ISBN',
       input: '9784873116211',
-      book: bookData
+      book: {},
+      price: 0
     }
     return data
+  },
+  computed: {
+    budget(): number {
+      const data: number = this.$store.state.monthData.budget || 0
+      return data
+    },
+    books(): any {
+      return this.$store.state.boughtBooks || []
+    },
+    bought(): number {
+      let sum = 0
+      this.books.forEach((book: any) => {
+        sum += book.price
+      })
+      return sum
+    }
   },
   watch: {
     modalShow() {
@@ -55,7 +80,80 @@ export default Vue.extend({
   destroyed() {
     if (this.Quagga) this.Quagga.stop()
   },
+  async mounted() {
+    if (!this.$store.state.uid) this.$router.push('/user/login')
+    try {
+      if (this.$store.state.monthData) {
+        return
+      }
+      await this.$store.dispatch('getUserMonthData', {
+        uid: this.$store.state.uid,
+        month: this.$store.state.month
+      })
+    } catch (e) {
+      console.error(e)
+    }
+  },
   methods: {
+    async onClickBought() {
+      try {
+        await this.$store.dispatch('setBoughtBook', {
+          book: this.book,
+          price: this.price,
+          isbn: this.input
+        })
+        this.$notify({
+          type: 'success',
+          title: '登録成功',
+          message: ''
+        })
+        const newBought: number = this.bought + Number(this.price)
+        this.book = {}
+        this.price = 0
+        if (newBought >= this.budget) {
+          // 100%超えた場合
+          this.$router.push(
+            `/user/${this.$store.state.uid}/${moment().format(
+              'YYYYMM'
+            )}/complete`
+          )
+        } else {
+          // 100%超えない場合
+          this.$router.push(
+            `/user/${this.$store.state.uid}/${moment().format('YYYYMM')}/list`
+          )
+        }
+      } catch (e) {
+        this.$notify.error({
+          title: '登録失敗',
+          message: ''
+        })
+      }
+    },
+    async onClickWant() {
+      try {
+        await this.$store.dispatch('setWantBook', {
+          book: this.book,
+          price: this.price,
+          isbn: this.input
+        })
+        this.$notify({
+          type: 'success',
+          title: '登録成功',
+          message: ''
+        })
+        this.book = {}
+        this.price = 0
+        this.$router.push(
+          `/user/${this.$store.state.uid}/${moment().format('YYYYMM')}/list`
+        )
+      } catch (e) {
+        this.$notify.error({
+          title: '登録失敗',
+          message: ''
+        })
+      }
+    },
     async search() {
       try {
         const res = await this.$axios.$get(
@@ -203,5 +301,13 @@ export default Vue.extend({
     display: flex;
     justify-content: center;
   }
+  .book-wrap {
+    display: flex;
+    justify-content: center;
+  }
+}
+.book-searched-input {
+  margin-top: 10px;
+  padding: 0 50px;
 }
 </style>

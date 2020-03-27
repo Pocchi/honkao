@@ -1,5 +1,5 @@
 <template lang="pug">
-  .book(v-if="book")
+  .book(v-if="book && book.volumeInfo")
     .book-image
       img(:src="book.volumeInfo.imageLinks.smallThumbnail")
     .book-texts
@@ -21,18 +21,26 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .book {
-  margin: 0 auto;
+  width: 200px;
+  box-sizing: border-box;
   border: 1px solid #999;
   padding: 20px 10px;
-  width: 200px;
   text-align: center;
   img {
     width: 100px;
   }
   .book-texts {
     margin-top: 5px;
+  }
+  &.small {
+    max-width: 120px;
+    width: 100%;
+    padding: 10px 5px;
+    img {
+      width: calc(100% - 20px);
+    }
   }
 }
 </style>

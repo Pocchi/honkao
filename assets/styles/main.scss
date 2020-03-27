@@ -24,3 +24,18 @@ a {
   margin-top: 30px;
   padding: 40px 30px;
 }
+.meter {
+  .el-progress-bar__outer {
+    border-radius: 0;
+  }
+  .el-progress-bar__inner {
+    border-radius: 0;
+    background-color: #ff6930;
+  }
+}
+.title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ccc;
+}
