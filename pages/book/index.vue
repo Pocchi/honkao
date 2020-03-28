@@ -259,9 +259,9 @@ export default Vue.extend({
 }
 .modal {
   position: absolute;
-  top: 0;
+  top: 130px;
   padding: 0;
-  width: 400px;
+  width: 350px;
   height: 400px;
   box-sizing: border-box;
   left: 50%;
