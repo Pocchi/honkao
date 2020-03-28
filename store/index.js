@@ -2,6 +2,7 @@ import firebase from '~/plugins/firebase'
 const usersRef = firebase.firestore().collection('users')
 import Cookies from 'universal-cookie'
 import moment from 'moment'
+const cookies = new Cookies()
 
 export const state = () => ({
   isLoggedIn: false,
@@ -31,6 +32,12 @@ export const mutations = {
   },
   resetBoughtBooks: (state) => {
     state.boughtBooks = []
+  },
+  resetUser: (state) => {
+    state.uid = null
+    state.user = {}
+    state.monthData = {}
+    boughtBooks = []
   }
 }
 
@@ -75,9 +82,9 @@ export const actions = {
       .signOut()
       .then(() => {
         console.log('ログアウトしました')
-        const cookies = new Cookies()
         cookies.remove('user')
         cookies.remove('uid')
+        commit('resetUser')
       })
       .catch((error) => {
         console.log(`ログアウト時にエラーが発生しました (${error})`)
@@ -112,7 +119,6 @@ export const actions = {
       .catch((error) => {
         throw new Error('login: Error getting document', error)
       })
-    const cookies = new Cookies()
     console.log(user)
     cookies.set('user', JSON.stringify(user))
     cookies.set('uid', JSON.stringify(uid))
