@@ -56,7 +56,7 @@ export default Vue.extend({
     },
     percentage(): number {
       if (this.budget > 0) {
-        return (this.bought / this.budget) * 100
+        return Math.floor((this.bought / this.budget) * 100)
       } else {
         return 0
       }
