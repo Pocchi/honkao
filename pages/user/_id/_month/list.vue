@@ -65,13 +65,6 @@ export default Vue.extend({
   async mounted() {
     if (!this.$store.state.uid) this.$router.push('/user/login')
     try {
-      if (
-        this.$store.state.monthData &&
-        this.$store.state.monthData.created_at &&
-        this.$store.state.uid === this.uid
-      ) {
-        return
-      }
       await this.$store.dispatch('getUserMonthData', {
         uid: this.uid,
         month: this.month
