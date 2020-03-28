@@ -259,9 +259,9 @@ export default Vue.extend({
 }
 .modal {
   position: absolute;
-  top: 0;
+  top: 130px;
   padding: 0;
-  width: 400px;
+  width: 350px;
   height: 400px;
   box-sizing: border-box;
   left: 50%;
@@ -284,11 +284,6 @@ export default Vue.extend({
     position: absolute;
     width: 300px;
     height: 300px;
-  }
-  .detect-area {
-    position: absolute;
-    border: 2px solid #0000ff;
-    top: 0;
   }
   .drawingBuffer {
     position: absolute;
