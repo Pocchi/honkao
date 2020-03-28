@@ -285,11 +285,6 @@ export default Vue.extend({
     width: 300px;
     height: 300px;
   }
-  .detect-area {
-    position: absolute;
-    border: 2px solid #0000ff;
-    top: 0;
-  }
   .drawingBuffer {
     position: absolute;
     top: 0;
