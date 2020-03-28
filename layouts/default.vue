@@ -1,8 +1,8 @@
 <template lang="pug">
   .wrapper
     header
-      .logo
-        img(src="~/assets/images/logo@2x.png")
+      h1.logo
+        img(src="~/assets/images/logo@2x.png" alt="本の購入管理 ほんかお")
       nav
         ul
           li(v-if="uid")
