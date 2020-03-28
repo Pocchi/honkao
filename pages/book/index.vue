@@ -160,11 +160,20 @@ export default Vue.extend({
           `https://www.googleapis.com/books/v1/volumes?q=isbn:${this.input}`
         )
         console.log(res)
-        if (res && res.items.length > 0) {
+        if (res && res.items && res.items.length > 0) {
           this.book = res.items[0]
+        } else {
+          this.$notify.error({
+            title: '見つかりませんでした',
+            message: ''
+          })
         }
       } catch (e) {
         console.error(e)
+        this.$notify.error({
+          title: '見つかりませんでした',
+          message: ''
+        })
       }
     },
     initQuagga(): void {
