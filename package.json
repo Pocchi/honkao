@@ -23,7 +23,7 @@
     "node-sass": "^4.13.1",
     "nuxt": "^2.12.0",
     "nuxt-typed-vuex": "^0.1.17",
-    "pug": "^2.0.4",
+    "pug": "^3.0.1",
     "pug-plain-loader": "^1.0.0",
     "quagga": "^0.12.1",
     "ress": "^2.0.4",
